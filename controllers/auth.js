@@ -16,13 +16,16 @@ const register = async (req, res) => {
         .json({ error: "Email, phone or username is required" });
     }
 
+    // filter out or null undefined values before querying
+    const queryConditions = [];
+    if (email) queryConditions.push({ email });
+    if (phone) queryConditions.push({ phone });
+    if (name) queryConditions.push({ name });
+
     const existingUser = await User.findOne({
-      $or: [
-        email ? { email } : null,
-        phone ? { phone } : null,
-        name ? { name } : null,
-      ],
+      $or: queryConditions,
     });
+
     if (existingUser)
       return res.status(400).json({ error: `user already exists` });
 
