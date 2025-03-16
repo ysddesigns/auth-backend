@@ -52,8 +52,17 @@ const login = async (req, res) => {
         .json({ error: `Credentials and password are required` });
     }
 
+    const queryConditions = [];
+    if (credential.includes("@")) {
+      queryConditions.push({ email: credential });
+    } else if (/^\d+$/.test(credential)) {
+      queryConditions.push({ phone: credential });
+    } else {
+      queryConditions.push({ name: credential });
+    }
+
     const user = await User.findOne({
-      $or: [{ email: credential }, { name: credential }, { phone: credential }],
+      $or: queryConditions,
     });
 
     if (!user) return res.status(404).json({ error: `user not found` });
