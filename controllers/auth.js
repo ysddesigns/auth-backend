@@ -82,8 +82,8 @@ const login = async (req, res) => {
 
 const sendOtp = async (req, res) => {
   const { phone } = req.body;
-  const otp = Math.floor(10000 + Math.random() * 90000).toString();
-  const otpExpires = Date.now() + 5 * 60 * 1000; //5 mins
+  const otp = Math.floor(100000 + Math.random() * 900000).toString();
+  const otpExpires = Date.now() + 600000; //5 mins
 
   try {
     await User.findOneAndUpdate(
@@ -99,7 +99,9 @@ const sendOtp = async (req, res) => {
         to: phone,
       })
       .then(() => res.json({ message: `OTP sent` }))
-      .catch((err) => res.status(400).json({ error: err.message }));
+      .catch((err) => {
+        res.status(400).json({ error: err.message });
+      });
   } catch (error) {
     res.status(500).json({ error: `error sending otp` });
   }
