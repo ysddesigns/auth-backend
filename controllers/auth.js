@@ -84,7 +84,7 @@ const sendOtp = async (req, res) => {
   const { phone } = req.body;
   const otp = Math.floor(100000 + Math.random() * 900000).toString();
   const otpExpires = Date.now() + 600000; //5 mins
-  console.log("phone number from req.body:", phone``);
+  console.log("phone number from req.body:", phone);
   console.log("twilio SID:", process.env.TWILIO_SID);
   console.log("Twilio Phone", process.env.TWILIO_PHONE);
   console.log("Twilio Auth token", process.env.TWILIO_AUTH_TOKEN);
