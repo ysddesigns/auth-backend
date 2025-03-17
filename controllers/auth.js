@@ -92,17 +92,14 @@ const sendOtp = async (req, res) => {
       { upsert: true, new: true }
     );
 
-    client.messages
-      .create({
-        body: `Your OTP is ${otp}`,
-        from: process.env.TWILIO_PHONE,
-        to: phone,
-      })
-      .then(() => res.json({ message: `OTP sent` }))
-      .catch((err) => {
-        res.status(400).json({ error: err.message });
-      });
+    await client.messages.create({
+      body: `Your OTP is ${otp}`,
+      from: process.env.TWILIO_PHONE,
+      to: phone,
+    });
+    res.json({ message: "OTP sent" });
   } catch (error) {
+    console.error("Error sending OTP:", error);
     res.status(500).json({ error: `error sending otp` });
   }
 };
