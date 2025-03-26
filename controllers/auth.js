@@ -146,7 +146,7 @@ const sendEmailOtp = async (req, res) => {
   const appName = "AbData";
   const appEmail = "support@abdata.ng";
   const mailOptions = {
-    from: `"YourAppName Support" <${appEmail}>`, // Use a recognizable sender name
+    from: `${appName} <${appEmail}>`, // Use a recognizable sender name
     to: email,
     subject: `Your OTP Code for Secure Access to ${appName}`,
     text: `Hello,\n\nYour OTP code is: ${otp}\nIt will expire in 5 minutes.\n\nIf you did not request this, please ignore this email.\n\nBest regards,\n${appName} Support Team`,
